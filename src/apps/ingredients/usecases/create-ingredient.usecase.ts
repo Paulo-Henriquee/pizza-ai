@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, Inject } from '@nestjs/common';
 import { IngredientEntity } from '../entities/ingredient.entity';
 import type { IIngredientRepository } from '../repositories/ingredient.repository.interface';
 
@@ -9,7 +9,10 @@ import type { IIngredientRepository } from '../repositories/ingredient.repositor
  */
 @Injectable()
 export class CreateIngredientUseCase {
-  constructor(private readonly repository: IIngredientRepository) {}
+  constructor(
+    @Inject('IIngredientRepository')
+    private readonly repository: IIngredientRepository,
+  ) {}
 
   async execute(data: CreateIngredientInput): Promise<IngredientEntity> {
     // 1. Criar entidade para validar regras de negócio

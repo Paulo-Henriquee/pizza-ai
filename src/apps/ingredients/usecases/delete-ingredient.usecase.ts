@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import type { IIngredientRepository } from '../repositories/ingredient.repository.interface';
 
 /**
@@ -8,7 +8,10 @@ import type { IIngredientRepository } from '../repositories/ingredient.repositor
  */
 @Injectable()
 export class DeleteIngredientUseCase {
-  constructor(private readonly repository: IIngredientRepository) {}
+  constructor(
+    @Inject('IIngredientRepository')
+    private readonly repository: IIngredientRepository,
+  ) {}
 
   async execute(id: string): Promise<void> {
     // 1. Verificar se o ingrediente existe

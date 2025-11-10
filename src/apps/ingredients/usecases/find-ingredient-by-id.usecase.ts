@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { IngredientEntity } from '../entities/ingredient.entity';
 import type { IIngredientRepository } from '../repositories/ingredient.repository.interface';
 
@@ -9,7 +9,10 @@ import type { IIngredientRepository } from '../repositories/ingredient.repositor
  */
 @Injectable()
 export class FindIngredientByIdUseCase {
-  constructor(private readonly repository: IIngredientRepository) {}
+  constructor(
+    @Inject('IIngredientRepository')
+    private readonly repository: IIngredientRepository,
+  ) {}
 
   async execute(id: string): Promise<IngredientEntity> {
     const ingredient = await this.repository.findById(id);

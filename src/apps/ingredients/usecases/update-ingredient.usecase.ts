@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Inject } from '@nestjs/common';
 import { IngredientEntity } from '../entities/ingredient.entity';
 import type { IIngredientRepository } from '../repositories/ingredient.repository.interface';
 
@@ -9,7 +9,10 @@ import type { IIngredientRepository } from '../repositories/ingredient.repositor
  */
 @Injectable()
 export class UpdateIngredientUseCase {
-  constructor(private readonly repository: IIngredientRepository) {}
+  constructor(
+    @Inject('IIngredientRepository')
+    private readonly repository: IIngredientRepository,
+  ) {}
 
   async execute(id: string, data: UpdateIngredientInput): Promise<IngredientEntity> {
     // 1. Verificar se o ingrediente existe

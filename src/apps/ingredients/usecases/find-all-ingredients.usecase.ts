@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IngredientEntity } from '../entities/ingredient.entity';
 import type { IIngredientRepository } from '../repositories/ingredient.repository.interface';
 
@@ -9,7 +9,10 @@ import type { IIngredientRepository } from '../repositories/ingredient.repositor
  */
 @Injectable()
 export class FindAllIngredientsUseCase {
-  constructor(private readonly repository: IIngredientRepository) {}
+  constructor(
+    @Inject('IIngredientRepository')
+    private readonly repository: IIngredientRepository,
+  ) {}
 
   async execute(): Promise<IngredientEntity[]> {
     return await this.repository.findAll();
